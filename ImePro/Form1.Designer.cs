@@ -1,4 +1,7 @@
-﻿namespace ImePro
+﻿using System;
+using System.ComponentModel;
+
+namespace ImePro
 {
     partial class Form1
     {
@@ -28,6 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +42,7 @@
             this.inversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mirrorHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mirrorVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +50,13 @@
             this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to100pxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1000pxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.binaryThresholdingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.webcamOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.webcamOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greyscaleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -57,18 +67,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.binaryThresholdingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.webcamOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.webcamOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.greyscaleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.sepiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -82,7 +93,7 @@
             this.videoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(830, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(936, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -131,63 +142,70 @@
             // pixelCopyToolStripMenuItem
             // 
             this.pixelCopyToolStripMenuItem.Name = "pixelCopyToolStripMenuItem";
-            this.pixelCopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pixelCopyToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.pixelCopyToolStripMenuItem.Text = "Pixel Copy";
             this.pixelCopyToolStripMenuItem.Click += new System.EventHandler(this.pixelCopyToolStripMenuItem_Click);
             // 
             // greyscaleToolStripMenuItem
             // 
             this.greyscaleToolStripMenuItem.Name = "greyscaleToolStripMenuItem";
-            this.greyscaleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.greyscaleToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.greyscaleToolStripMenuItem.Text = "Greyscale";
             this.greyscaleToolStripMenuItem.Click += new System.EventHandler(this.greyscaleToolStripMenuItem_Click);
             // 
             // inversionToolStripMenuItem
             // 
             this.inversionToolStripMenuItem.Name = "inversionToolStripMenuItem";
-            this.inversionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.inversionToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.inversionToolStripMenuItem.Text = "Inversion";
             this.inversionToolStripMenuItem.Click += new System.EventHandler(this.inversionToolStripMenuItem_Click);
             // 
             // mirrorHToolStripMenuItem
             // 
             this.mirrorHToolStripMenuItem.Name = "mirrorHToolStripMenuItem";
-            this.mirrorHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mirrorHToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.mirrorHToolStripMenuItem.Text = "Mirror H";
             this.mirrorHToolStripMenuItem.Click += new System.EventHandler(this.mirrorHToolStripMenuItem_Click);
             // 
             // mirrorVToolStripMenuItem
             // 
             this.mirrorVToolStripMenuItem.Name = "mirrorVToolStripMenuItem";
-            this.mirrorVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mirrorVToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.mirrorVToolStripMenuItem.Text = "Mirror V";
             this.mirrorVToolStripMenuItem.Click += new System.EventHandler(this.mirrorVToolStripMenuItem_Click);
+            // 
+            // sepiaToolStripMenuItem
+            // 
+            this.sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
+            this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.sepiaToolStripMenuItem.Text = "Sepia";
+            this.sepiaToolStripMenuItem.Click += new System.EventHandler(this.sepiaToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.histogramToolStripMenuItem.Text = "Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // brightnessToolStripMenuItem
             // 
             this.brightnessToolStripMenuItem.Name = "brightnessToolStripMenuItem";
-            this.brightnessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.brightnessToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.brightnessToolStripMenuItem.Text = "Brightness";
             this.brightnessToolStripMenuItem.Click += new System.EventHandler(this.brightnessToolStripMenuItem_Click);
             // 
             // contrastToolStripMenuItem
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
-            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.contrastToolStripMenuItem.Text = "Contrast";
             this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
             // 
             // rotationToolStripMenuItem
             // 
             this.rotationToolStripMenuItem.Name = "rotationToolStripMenuItem";
-            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.rotationToolStripMenuItem.Text = "Rotation";
             this.rotationToolStripMenuItem.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
             // 
@@ -197,7 +215,7 @@
             this.to100pxToolStripMenuItem,
             this.to1000pxToolStripMenuItem});
             this.scaleToolStripMenuItem.Name = "scaleToolStripMenuItem";
-            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.scaleToolStripMenuItem.Text = "Scale";
             // 
             // to100pxToolStripMenuItem
@@ -214,6 +232,13 @@
             this.to1000pxToolStripMenuItem.Text = "to 1000px";
             this.to1000pxToolStripMenuItem.Click += new System.EventHandler(this.to1000pxToolStripMenuItem_Click);
             // 
+            // binaryThresholdingToolStripMenuItem
+            // 
+            this.binaryThresholdingToolStripMenuItem.Name = "binaryThresholdingToolStripMenuItem";
+            this.binaryThresholdingToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.binaryThresholdingToolStripMenuItem.Text = "Binary Thresholding";
+            this.binaryThresholdingToolStripMenuItem.Click += new System.EventHandler(this.binaryThresholdingToolStripMenuItem_Click);
+            // 
             // extraToolStripMenuItem
             // 
             this.extraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -225,24 +250,55 @@
             // rightToLeftToolStripMenuItem
             // 
             this.rightToLeftToolStripMenuItem.Name = "rightToLeftToolStripMenuItem";
-            this.rightToLeftToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.rightToLeftToolStripMenuItem.Text = "RightPic to LeftPic";
+            this.rightToLeftToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rightToLeftToolStripMenuItem.Text = "processed to loaded";
             this.rightToLeftToolStripMenuItem.Click += new System.EventHandler(this.rightToLeftToolStripMenuItem_Click);
+            // 
+            // webcamOnToolStripMenuItem
+            // 
+            this.webcamOnToolStripMenuItem.Name = "webcamOnToolStripMenuItem";
+            this.webcamOnToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.webcamOnToolStripMenuItem.Text = "Webcam On";
+            this.webcamOnToolStripMenuItem.Click += new System.EventHandler(this.webcamOnToolStripMenuItem_Click);
+            // 
+            // webcamOffToolStripMenuItem
+            // 
+            this.webcamOffToolStripMenuItem.Name = "webcamOffToolStripMenuItem";
+            this.webcamOffToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.webcamOffToolStripMenuItem.Text = "Webcam Off";
+            this.webcamOffToolStripMenuItem.Click += new System.EventHandler(this.webcamOffToolStripMenuItem_Click);
+            // 
+            // videoToolStripMenuItem
+            // 
+            this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.greyscaleToolStripMenuItem1});
+            this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.videoToolStripMenuItem.Text = "Video";
+            // 
+            // greyscaleToolStripMenuItem1
+            // 
+            this.greyscaleToolStripMenuItem1.Name = "greyscaleToolStripMenuItem1";
+            this.greyscaleToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.greyscaleToolStripMenuItem1.Text = "Greyscale";
+            this.greyscaleToolStripMenuItem1.Click += new System.EventHandler(this.greyscaleToolStripMenuItem1_Click);
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(12, 38);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox1.Size = new System.Drawing.Size(300, 225);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(418, 38);
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox2.Location = new System.Drawing.Point(318, 38);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox2.Size = new System.Drawing.Size(300, 225);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
@@ -258,39 +314,39 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 460);
+            this.trackBar1.Location = new System.Drawing.Point(12, 327);
             this.trackBar1.Maximum = 50;
             this.trackBar1.Minimum = -50;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(400, 45);
+            this.trackBar1.Size = new System.Drawing.Size(456, 45);
             this.trackBar1.TabIndex = 3;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // trackBar2
             // 
-            this.trackBar2.Location = new System.Drawing.Point(418, 460);
+            this.trackBar2.Location = new System.Drawing.Point(468, 327);
             this.trackBar2.Maximum = 100;
             this.trackBar2.Minimum = 1;
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(400, 45);
+            this.trackBar2.Size = new System.Drawing.Size(456, 45);
             this.trackBar2.TabIndex = 4;
             this.trackBar2.Value = 1;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
             // 
             // trackBar3
             // 
-            this.trackBar3.Location = new System.Drawing.Point(12, 524);
+            this.trackBar3.Location = new System.Drawing.Point(12, 391);
             this.trackBar3.Maximum = 360;
             this.trackBar3.Minimum = -360;
             this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(806, 45);
+            this.trackBar3.Size = new System.Drawing.Size(912, 45);
             this.trackBar3.TabIndex = 5;
             this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 444);
+            this.label1.Location = new System.Drawing.Point(12, 311);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 6;
@@ -299,66 +355,78 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(415, 444);
+            this.label2.Location = new System.Drawing.Point(465, 311);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Contrast";
+            this.label2.Text = "Contrast Value";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 508);
+            this.label3.Location = new System.Drawing.Point(12, 375);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Rotation";
             // 
-            // binaryThresholdingToolStripMenuItem
+            // pictureBox3
             // 
-            this.binaryThresholdingToolStripMenuItem.Name = "binaryThresholdingToolStripMenuItem";
-            this.binaryThresholdingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.binaryThresholdingToolStripMenuItem.Text = "Binary Thresholding";
-            this.binaryThresholdingToolStripMenuItem.Click += new System.EventHandler(this.binaryThresholdingToolStripMenuItem_Click);
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox3.Location = new System.Drawing.Point(624, 38);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(300, 225);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 9;
+            this.pictureBox3.TabStop = false;
             // 
-            // webcamOnToolStripMenuItem
+            // button1
             // 
-            this.webcamOnToolStripMenuItem.Name = "webcamOnToolStripMenuItem";
-            this.webcamOnToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
-            this.webcamOnToolStripMenuItem.Text = "Webcam On";
+            this.button1.Location = new System.Drawing.Point(12, 269);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(300, 30);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Load Image";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // webcamOffToolStripMenuItem
+            // button2
             // 
-            this.webcamOffToolStripMenuItem.Name = "webcamOffToolStripMenuItem";
-            this.webcamOffToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
-            this.webcamOffToolStripMenuItem.Text = "Webcam Off";
+            this.button2.Location = new System.Drawing.Point(318, 269);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(300, 30);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Load Background";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // videoToolStripMenuItem
+            // button3
             // 
-            this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.greyscaleToolStripMenuItem1});
-            this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.videoToolStripMenuItem.Text = "Video";
+            this.button3.Location = new System.Drawing.Point(624, 269);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(300, 30);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Subtract";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // greyscaleToolStripMenuItem1
+            // openFileDialog2
             // 
-            this.greyscaleToolStripMenuItem1.Name = "greyscaleToolStripMenuItem1";
-            this.greyscaleToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.greyscaleToolStripMenuItem1.Text = "Greyscale";
+            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
             // 
-            // sepiaToolStripMenuItem
+            // timer1
             // 
-            this.sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
-            this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.sepiaToolStripMenuItem.Text = "Sepia";
-            this.sepiaToolStripMenuItem.Click += new System.EventHandler(this.sepiaToolStripMenuItem_Click);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 581);
+            this.ClientSize = new System.Drawing.Size(936, 461);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -379,10 +447,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
 
         #endregion
 
@@ -421,6 +491,12 @@
         private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greyscaleToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sepiaToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

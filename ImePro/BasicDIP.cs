@@ -39,8 +39,6 @@ namespace ImePro
             int[] hist = new int[256];
             int percent = degree;
 
-            
-
             Color taken;
             Color grey;
             Byte greydata;
