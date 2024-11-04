@@ -1,0 +1,10 @@
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\ImePro.exe.config
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\ImePro.exe
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\ImePro.pdb
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.AssemblyReference.cache
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.Form1.resources
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.Properties.Resources.resources
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.GenerateResource.cache
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.CoreCompileInputs.cache
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.exe
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.pdb
