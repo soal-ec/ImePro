@@ -17,6 +17,7 @@ namespace ImePro
     {
         Bitmap loaded, bgloaded, processed;
         //wDevice devices[];
+        ConvMatrix convMatrix;
 
         public Form1()
         {
