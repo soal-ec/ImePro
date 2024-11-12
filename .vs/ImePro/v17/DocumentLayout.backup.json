@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\griin\\source\\repos\\ImePro\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|c:\\users\\griin\\source\\repos\\imepro\\imepro\\convmatrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\convmatrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|C:\\Users\\griin\\source\\repos\\ImePro\\imepro\\basicdip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\basicdip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|c:\\users\\griin\\source\\repos\\imepro\\imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|C:\\Users\\griin\\source\\repos\\ImePro\\imepro\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|C:\\Users\\griin\\source\\repos\\ImePro\\imepro\\basicdip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\basicdip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +30,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "ConvMatrix.cs",
+              "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\ConvMatrix.cs",
+              "RelativeDocumentMoniker": "ImePro\\ConvMatrix.cs",
+              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\ConvMatrix.cs*",
+              "RelativeToolTip": "ImePro\\ConvMatrix.cs*",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAowHwAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T03:36:56.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "ImePro\\Form1.Designer.cs",
@@ -38,46 +55,44 @@
               "RelativeToolTip": "ImePro\\Form1.Designer.cs",
               "ViewState": "AgIAAIwBAAAAAAAAAAAhwJwBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T11:24:44.58Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T11:24:44.58Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "BasicDIP.cs",
               "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\BasicDIP.cs",
               "RelativeDocumentMoniker": "ImePro\\BasicDIP.cs",
               "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\BasicDIP.cs",
               "RelativeToolTip": "ImePro\\BasicDIP.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowCsAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACsAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-04T08:43:45.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
               "RelativeDocumentMoniker": "ImePro\\Form1.cs",
               "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
               "RelativeToolTip": "ImePro\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAuwBUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-04T07:40:58.007Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
               "RelativeDocumentMoniker": "ImePro\\Form1.cs",
               "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs [Design]",
               "RelativeToolTip": "ImePro\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T11:23:00.027Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-11-04T11:23:00.027Z"
             }
           ]
         }

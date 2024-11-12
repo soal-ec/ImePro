@@ -115,14 +115,14 @@ namespace ImePro
             return true;
         }
 
-        public static bool Smooth(Bitmap b, int nWeight /* default to 1 */)
-        {
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(1);
-            m.Pixel = nWeight;
-            m.Factor = nWeight + 8;
-            return BitmapFilter.Conv3x3(b, m);
-        }
+        //public static bool Smooth(Bitmap b, int nWeight /* default to 1 */)
+        //{
+        //    ConvMatrix m = new ConvMatrix();
+        //    m.SetAll(1);
+        //    m.Pixel = nWeight;
+        //    m.Factor = nWeight + 8;
+        //    return BitmapFilter.Conv3x3(b, m);
+        //}
 
 
 
