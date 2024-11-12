@@ -1,4 +1,5 @@
-Intelligent Systems Activity for:
+
+### For Intelligent Systems class
 - DIP Activity
 - DIP Convolution Matrix Prpcess
 
