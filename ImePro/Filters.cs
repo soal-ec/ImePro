@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ImageProcess2
+namespace ImePro
 {
 	public class ConvMatrix
 	{
@@ -394,6 +394,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}
+		
 		public static bool MeanRemoval(Bitmap b, int nWeight /* default to 9*/ )
 		{
 			ConvMatrix m = new ConvMatrix();
@@ -403,6 +404,7 @@ namespace ImageProcess2
 
 			return BitmapFilter.Conv3x3(b, m);
 		}
+		
 		public static bool Sharpen(Bitmap b, int nWeight /* default to 11*/ )
 		{
 			ConvMatrix m = new ConvMatrix();
@@ -413,6 +415,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}
+		
 		public static bool EmbossLaplacian(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();
@@ -423,6 +426,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}	
+		
 		public static bool EdgeDetectQuick(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();
@@ -746,6 +750,7 @@ namespace ImageProcess2
 			return true;
             
 		}
+		
 		public static bool EdgeDetectDifference(Bitmap b, byte nThreshold)
 		{
 			// This one works by working out the greatest difference between a pixel and it's eight neighbours.
@@ -875,6 +880,7 @@ namespace ImageProcess2
 
 			return true;
 		}
+		
 		public static Bitmap Resize(Bitmap b, int nWidth, int nHeight, bool bBilinear)
 		{
 			Bitmap bTemp = (Bitmap)b.Clone();
@@ -1165,7 +1171,7 @@ namespace ImageProcess2
 
 			int newX, newY;
 
-			short nHalf = (short)Math.Floor(nDegree/2);
+			short nHalf = (short)Math.Floor((double)nDegree/2);
 			Random rnd = new Random();
 
 			for (int x = 0; x < nWidth; ++x)
@@ -1190,6 +1196,7 @@ namespace ImageProcess2
 
 			return true;
 		}
+		
 		public static bool Swirl(Bitmap b, double fDegree, bool bSmoothing /* default fDegree to .05 */)
 		{
 			int nWidth = b.Width;
@@ -1228,6 +1235,7 @@ namespace ImageProcess2
 				OffsetFilterAbs(b, pt);		
 			return true;
 		}
+		
 		public static bool Sphere(Bitmap b, bool bSmoothing){
 			int nWidth = b.Width;
 			int nHeight = b.Height;

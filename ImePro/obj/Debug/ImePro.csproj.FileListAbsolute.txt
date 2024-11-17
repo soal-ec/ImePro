@@ -8,3 +8,17 @@ C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.GenerateResour
 C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.CoreCompileInputs.cache
 C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.exe
 C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.pdb
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Controls.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Imaging.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Math.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Video.dll
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.xml
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Controls.xml
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Imaging.xml
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Math.xml
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Video.xml
+C:\Users\griin\source\repos\ImePro\ImePro\bin\Debug\AForge.Video.DirectShow.xml
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.csproj.Up2Date
+C:\Users\griin\source\repos\ImePro\ImePro\obj\Debug\ImePro.PopupForm.resources

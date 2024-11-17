@@ -12,6 +12,107 @@ namespace ImePro
 {
     static class BasicDIP
     {
+        //1
+
+        public static void PixelCopy(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    processed.SetPixel(x, y, pixel);
+                }
+            }
+        }
+
+        public static void Greyscale(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            Byte ave;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    ave = (Byte)(pixel.R + pixel.G + pixel.B / 3);
+                    Color grey = Color.FromArgb(ave, ave, ave);
+                    processed.SetPixel(x, y, grey);
+
+                }
+            }
+        }
+
+        public static void Inversion(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    Color inv = Color.FromArgb(255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
+                    processed.SetPixel(x, y, inv);
+
+                }
+            }
+        }
+
+        public static void MirrorH(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    processed.SetPixel(loaded.Width - 1 - x, y, pixel);
+                }
+            }
+        }
+
+        public static void MirrorV(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    processed.SetPixel(x, loaded.Height - 1 - y, pixel);
+                }
+            }
+        }
+
+        public static void Sepia(Bitmap loaded, ref Bitmap processed)
+        {
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    int sepR = (int)((pixel.R * 0.393) + (pixel.G * 0.769) + (pixel.B * 0.189));
+                    int sepG = (int)((pixel.R * 0.349) + (pixel.G * 0.686) + (pixel.B * 0.168));
+                    int sepB = (int)((pixel.R * 0.272) + (pixel.G * 0.534) + (pixel.B * 0.131));
+                    Color sep = Color.FromArgb(Math.Min(sepR, 255), Math.Min(sepG, 255), Math.Min(sepB, 255));
+                    processed.SetPixel(x, y, sep);
+                }
+            }
+        }
+
+
+
+        //2
+
         public static void Brightness(Bitmap a, ref Bitmap b, int value)
         {
             b = new Bitmap(a.Width, a.Height);
@@ -115,7 +216,7 @@ namespace ImePro
                     x0 = xp - xCenter;
                     y0 = yp - yCenter;
                     xs = (int)(x0 * cosA + y0 * sinA);
-                    ys = (int)(-x0 * sinA + y0 * cosA); 
+                    ys = (int)(-x0 * sinA + y0 * cosA);
                     xs = (int)(xs + xCenter);
                     ys = (int)(ys + yCenter);
                     xs = Math.Max(0, Math.Min(width - 1, xs));
@@ -178,7 +279,7 @@ namespace ImePro
             {
                 for (int y = 0; y < by; y++)
                 {
-                    b.SetPixel(x,y,Color.White);
+                    b.SetPixel(x, y, Color.White);
                 }
             }
 
@@ -191,5 +292,51 @@ namespace ImePro
                 }
             }
         }
+
+
+
+        // 3
+
+        public static void Subtraction(Bitmap loaded, Bitmap bgloaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color mgreen = Color.FromArgb(0, 0, 255);
+            int greygreen = (mgreen.R + mgreen.G + mgreen.B) / 3;
+            int threshold = 10;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    Color pixel = loaded.GetPixel(x, y);
+                    Color bgpixel = bgloaded.GetPixel(x, y);
+                    int grey = (pixel.R + pixel.G + pixel.B) / 3;
+                    int subtractvalue = Math.Abs(grey - greygreen);
+                    if (subtractvalue > threshold)
+                        processed.SetPixel(x, y, pixel);
+                    else
+                        processed.SetPixel(x, y, bgpixel);
+                }
+            }
+        }
+        public static void BinaryThresholding(Bitmap loaded, ref Bitmap processed)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            Color pixel;
+            int g;
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    g = (int)(pixel.R + pixel.G + pixel.B / 3);
+                    if (g < 180)
+                        processed.SetPixel(x, y, Color.Black);
+                    else
+                        processed.SetPixel(x, y, Color.White);
+                }
+            }
+        }
+
+
     }
 }
