@@ -3,7 +3,7 @@
 - DIP Activity
 - DIP Convolution Matrix Prpcess
 
-This does basic image processing stuff:
+For images this can:
 - Pixel Copy
 - Greyscale
 - Inversion
@@ -17,5 +17,26 @@ This does basic image processing stuff:
 - Binary Thresholding
 - Equalisation
 
-Has code for webcam implementation but need the files to work
-Added Convolution Matrix Class (still need missing files)
+Used AForge library forr Webcam integration
+For video streams filters from Filters.cs:
+- Greyscale
+- Inversion
+- Flip H/V/Both
+- Gamma
+- Brightness
+- Contrast
+- Color
+- Smooth
+- Gaussian Blur
+- Mean Removal
+- Sharpen
+- Emboss Laplacian
+- Edge Detect: Quick/Convoluution/Horizontal/Vertical/Homegenity/Difference
+- Edge Enhance
+- Random Jitter
+- Swirl
+- Sphere
+- Time Warp
+- Moire
+- Water
+- Pixelate
