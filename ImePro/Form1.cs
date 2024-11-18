@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using AForge.Imaging;
+
 //wusing WebCamLib;
 //wusing ImageProcess2;
-using AForge;
 using AForge.Video;
 using AForge.Video.DirectShow;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using AForge.Controls;
+//using OpenCvSharp;
+using AForge.Imaging.Filters;
 
 namespace ImePro
 {
@@ -60,6 +56,12 @@ namespace ImePro
         int framecount = 0;
         int frameskip = 1;
 
+        int ccGaussianBlurWeight = 5;
+        int ccSmoothWeight = 1;
+        byte ccEdgeEnhanceThreshold;
+
+        int ccMeanFilter = 7;
+
         public Form1()
         {
             InitializeComponent();
@@ -77,6 +79,7 @@ namespace ImePro
 
             if (toolStripComboBox1.Items.Count > 0) toolStripComboBox1.SelectedIndex = 0;
         }
+        
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (videoSource != null && videoSource.IsRunning)
@@ -126,6 +129,7 @@ namespace ImePro
         {
             processed.Save(saveFileDialog1.FileName);
         }
+        
         private void rightToLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loaded = processed;
@@ -333,7 +337,6 @@ namespace ImePro
             else
             {
                 label4.Text = "Loaded (Video)";
-                videoToolStripMenuItem.Enabled = true;
                 dIPToolStripMenuItem2.Enabled = false;
                 videoSource = new VideoCaptureDevice(videoDevices[toolStripComboBox1.SelectedIndex].MonikerString);
                 videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
@@ -356,8 +359,6 @@ namespace ImePro
                 textBox1.Text += ("Video Stopped");
             }            
             isVideoOn = false;
-            videoToolStripMenuItem.Enabled = false;
-            dIPToolStripMenuItem2.Enabled = true;
             pictureBox1.Image = loaded;
             pictureBox2.Enabled = true;
         }
@@ -369,146 +370,211 @@ namespace ImePro
             pictureBox1.Image = video;
         }
 
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-            int x = e.X;
-            int y = e.Y;
-
-            textBox1.Text += $"Clicked at X: {x}, Y: {y}";
-        }
-
         // Update picturebox2
         private void videoSource_filter(object sender, NewFrameEventArgs eventArgs)
         {
             framecount++;
-            if (framecount % frameskip == 0)
+            if (framecount % frameskip == 0 && isVideoOn)
             {
-                Bitmap video = (Bitmap)eventArgs.Frame.Clone();
-                switch (videoFilter)
-                {
-                    case "greyscale":
-                        BitmapFilter.GrayScale(video);
-                        break;
-                    case "inversion":
-                        BitmapFilter.Invert(video);
-                        break;
-                    case "mirrorH":
-                        BitmapFilter.Flip(video, true, false);
-                        break;
-                    case "mirrorV":
-                        BitmapFilter.Flip(video, false, true);
-                        break;
-                    case "mirrorHV":
-                        BitmapFilter.Flip(video, true, true);
-                        break;
-                    case "color":
-                        BitmapFilter.Color(video, colorRGB[0], colorRGB[1], colorRGB[2]);
-                        break;
-                    case "brightness":
-                        BitmapFilter.Brightness(video, brightness);
-                        break;
-                    case "contrast":
-                        BitmapFilter.Contrast(video, contrast);
-                        break;
-                    case "gamma":
-                        BitmapFilter.Gamma(video, gammaRGB[0] / 10, gammaRGB[1] / 10, gammaRGB[2] / 10);
-                        break;
-                    case "resize":
-                        BitmapFilter.Resize(video, resizeValues[0], resizeValues[1], resizeIfBilinear);
-                        break;
-                    case "smooth":
-                        BitmapFilter.Smooth(video, smoothWeight);
-                        break;
-                    case "gaussianBlur":
-                        BitmapFilter.GaussianBlur(video, gaussianBlurWeight);
-                        break;
-                    case "meanRemoval":
-                        BitmapFilter.MeanRemoval(video, meanRemovalWeight);
-                        break;
-                    case "sharpen":
-                        BitmapFilter.Sharpen(video, sharpenWeight);
-                        break;
-                    case "embossLaplacian":
-                        BitmapFilter.EmbossLaplacian(video);
-                        break;
-                    case "edgeDetectQuick":
-                        BitmapFilter.EdgeDetectQuick(video);
-                        break;
-                    case "edgeDetectConvolution":
-                        BitmapFilter.EdgeDetectConvolution(video, edgeDetectConvolutionType, edgeEnhanceThreshold);
-                        break;
-                    case "edgeEnhance":
-                        BitmapFilter.EdgeEnhance(video, edgeEnhanceThreshold);
-                        break;
-                    case "edgeDetectH":
-                        BitmapFilter.EdgeDetectHorizontal(video);
-                        break;
-                    case "edgeDetectV":
-                        BitmapFilter.EdgeDetectVertical(video);
-                        break;
-                    case "edgeDetectHomogenity":
-                        BitmapFilter.EdgeDetectHomogenity(video, edgeDetectHomogenityThreshold);
-                        break;
-                    case "edgeDetectDifference":
-                        BitmapFilter.EdgeDetectDifference(video, edgeDetectDifferenceThreshold);
-                        break;
-                    case "randomJitter":
-                        BitmapFilter.RandomJitter(video, jitterDegree);
-                        break;
-                    case "swirl":
-                        BitmapFilter.Swirl(video, swirlDegree, swirlSmoothing);
-                        break;
-                    case "sphere":
-                        BitmapFilter.Sphere(video, sphereSmoothing);
-                        break;
-                    case "timeWarp":
-                        BitmapFilter.TimeWarp(video, timeWarpFactor, timeWarpSmoothing);
-                        break;
-                    case "moire":
-                        BitmapFilter.Moire(video, moireDegree);
-                        break;
-                    case "water":
-                        BitmapFilter.Water(video, waterWave, waterSmoothing);
-                        break;
-                    case "pixelate":
-                        BitmapFilter.Pixelate(video, pixelatePixel, pixelateGrid);
-                        break;
-                    default:
-                        break;
-                }
-                pictureBox3.Image = video;
+                Bitmap bm = (Bitmap)eventArgs.Frame.Clone();
+                applyFilter(bm, videoFilter);
             }
+        }
+
+        private void applyFilter(Bitmap bm, string videoFilter)
+        {
+            if (!isVideoOn)
+            {
+                textBox1.Text += "Applying Filter\r\n";
+                processed = (Bitmap)loaded.Clone();
+                bm = processed;
+                if (bm == null)
+                {
+                    textBox1.Text += "Loaded is null";
+                    return;
+                }
+            }
+            switch (videoFilter)
+            {
+                case "greyscale":
+                    BitmapFilter.GrayScale(bm);
+                    break;
+                case "inversion":
+                    BitmapFilter.Invert(bm);
+                    break;
+                case "mirrorH":
+                    BitmapFilter.Flip(bm, true, false);
+                    break;
+                case "mirrorV":
+                    BitmapFilter.Flip(bm, false, true);
+                    break;
+                case "mirrorHV":
+                    BitmapFilter.Flip(bm, true, true);
+                    break;
+                case "color":
+                    BitmapFilter.Color(bm, colorRGB[0], colorRGB[1], colorRGB[2]);
+                    break;
+                case "brightness":
+                    BitmapFilter.Brightness(bm, brightness);
+                    break;
+                case "contrast":
+                    BitmapFilter.Contrast(bm, contrast);
+                    break;
+                case "gamma":
+                    BitmapFilter.Gamma(bm, gammaRGB[0] / 10, gammaRGB[1] / 10, gammaRGB[2] / 10);
+                    break;
+                case "resize":
+                    BitmapFilter.Resize(bm, resizeValues[0], resizeValues[1], resizeIfBilinear);
+                    break;
+                case "smooth":
+                    BitmapFilter.Smooth(bm, smoothWeight);
+                    break;
+                case "gaussianBlur":
+                    BitmapFilter.GaussianBlur(bm, gaussianBlurWeight);
+                    break;
+                case "meanRemoval":
+                    BitmapFilter.MeanRemoval(bm, meanRemovalWeight);
+                    break;
+                case "sharpen":
+                    BitmapFilter.Sharpen(bm, sharpenWeight);
+                    break;
+                case "embossLaplacian":
+                    BitmapFilter.EmbossLaplacian(bm);
+                    break;
+                case "edgeDetectQuick":
+                    BitmapFilter.EdgeDetectQuick(bm);
+                    break;
+                case "edgeDetectConvolution":
+                    BitmapFilter.EdgeDetectConvolution(bm, edgeDetectConvolutionType, edgeEnhanceThreshold);
+                    break;
+                case "edgeEnhance":
+                    BitmapFilter.EdgeEnhance(bm, edgeEnhanceThreshold);
+                    break;
+                case "edgeDetectH":
+                    BitmapFilter.EdgeDetectHorizontal(bm);
+                    break;
+                case "edgeDetectV":
+                    BitmapFilter.EdgeDetectVertical(bm);
+                    break;
+                case "edgeDetectHomogenity":
+                    BitmapFilter.EdgeDetectHomogenity(bm, edgeDetectHomogenityThreshold);
+                    break;
+                case "edgeDetectDifference":
+                    BitmapFilter.EdgeDetectDifference(bm, edgeDetectDifferenceThreshold);
+                    break;
+                case "randomJitter":
+                    BitmapFilter.RandomJitter(bm, jitterDegree);
+                    break;
+                case "swirl":
+                    BitmapFilter.Swirl(bm, swirlDegree, swirlSmoothing);
+                    break;
+                case "sphere":
+                    BitmapFilter.Sphere(bm, sphereSmoothing);
+                    break;
+                case "timeWarp":
+                    BitmapFilter.TimeWarp(bm, timeWarpFactor, timeWarpSmoothing);
+                    break;
+                case "moire":
+                    BitmapFilter.Moire(bm, moireDegree);
+                    break;
+                case "water":
+                    BitmapFilter.Water(bm, waterWave, waterSmoothing);
+                    break;
+                case "pixelate":
+                    BitmapFilter.Pixelate(bm, pixelatePixel, pixelateGrid);
+                    break;
+                case "coinDetect":
+                    if (!isVideoOn)
+                    {
+                        // using bitmap
+                        BitmapFilter.GrayScale(bm);
+                        BitmapFilter.GaussianBlur(bm, ccGaussianBlurWeight);
+                        BitmapFilter.Smooth(bm, ccSmoothWeight);
+                        BitmapFilter.EmbossLaplacian(bm);
+                        BitmapFilter.EdgeEnhance(bm, ccEdgeEnhanceThreshold);
+
+                        // using mat
+                        //Mat bmat = bm.ToMat();
+                        //Cv2.MedianBlur((InputArray)bm, bm, 5);
+                    }
+                    break;
+                case "coinDetectAForge":
+                    if (!isVideoOn)
+                    {
+                        Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
+                        bm = grayscaleFilter.Apply(bm);
+                        GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
+                        bm = blurFilter.Apply(bm);
+                        Mean meanFilter = new Mean();
+                        bm = meanFilter.Apply(bm);
+                        SobelEdgeDetector edgeDetector = new SobelEdgeDetector();
+                        bm = edgeDetector.Apply(bm);
+                        //CannyEdgeDetector canny = new CannyEdgeDetector(lowThreshold, highThreshold);
+                        //bm = canny.Apply(bm);
+
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+            pictureBox3.Image = bm;
+            
         }
 
         private void pixelCopyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             videoFilter = "";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void greyscaleToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             videoFilter = "greyscale";
             // timer1.Enabled = true;
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void inversionToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             videoFilter = "inversion";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             videoFilter = "mirrorH";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             videoFilter = "mirrorV";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void bothToolStripMenuItem_Click(object sender, EventArgs e)
         {
             videoFilter = "mirrorHV";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void gammaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -556,6 +622,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void brightnessToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -578,6 +648,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void contrastToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -600,29 +674,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
-        }
-
-        private void rotationToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            PopupForm popup = new PopupForm();
-            popup.PopupTitle = "Rotation -180 to 180 degrees";
-            System.Windows.Forms.TrackBar trackBar = new System.Windows.Forms.TrackBar
+            if (!isVideoOn)
             {
-                Height = 45,
-                Width = 392,
-                Minimum = -180,
-                Maximum = 180,
-                Value = 0,
-
-            };
-            popup.SetInputControl(trackBar);
-            if (popup.ShowDialog() == DialogResult.OK)
-            {
-                rotation = trackBar.Value;
-                videoFilter = "rotation";
+                applyFilter(processed, videoFilter);
             }
-            popup.Update();
-            textBox1.Text += popup.ifPanelNull();
         }
 
         private void scaleToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -673,6 +728,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void colorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -723,6 +782,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void smoothToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -747,6 +810,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void gaussianBlurToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -771,6 +838,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -795,6 +866,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -818,16 +893,28 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
         {
             videoFilter = "embossLaplacian";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void edgeDetectQuickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             videoFilter = "edgeDetectQuick";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void edgeDetectConvolutionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -884,16 +971,28 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void horizontalToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             videoFilter = "edgeDetectH";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void verticalToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             videoFilter = "edgeDetectV";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void homogenityToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -922,6 +1021,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void differenceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -950,6 +1053,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void edgeEnhanceToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -978,6 +1085,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void randomJitterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1001,6 +1112,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void swirlToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1039,6 +1154,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void sphereToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1065,6 +1184,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void timeWarpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1102,6 +1225,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void moireToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1131,6 +1258,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void waterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1169,6 +1300,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void pixelateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1206,6 +1341,66 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
+        }
+
+        private void tweakValuesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PopupForm popup = new PopupForm();
+            popup.PopupTitle = "Gaussian Blur";
+            System.Windows.Forms.NumericUpDown gbNUD = new System.Windows.Forms.NumericUpDown
+            {
+                Height = 45,
+                Width = 392,
+                Minimum = -10,
+                Maximum = 20,
+                Value = 4,
+                DecimalPlaces = 0,
+                Text = "Gaussian Blur Weight"
+            };
+            System.Windows.Forms.NumericUpDown sNUD = new System.Windows.Forms.NumericUpDown
+            {
+                Height = 45,
+                Width = 392,
+                Minimum = -10,
+                Maximum = 20,
+                Value = 1,
+                DecimalPlaces = 0,
+                Text = "Smooth Weight"
+            };
+            System.Windows.Forms.TrackBar eetNUD = new System.Windows.Forms.TrackBar
+            {
+                Height = 45,
+                Width = 392,
+                Minimum = 0,
+                Maximum = 255,
+                Value = 0,
+                Text = "Threshold"
+            };
+            popup.SetInputControl(gbNUD);
+            popup.SetInputControl(sNUD);
+            popup.SetInputControl(eetNUD);
+            if (popup.ShowDialog() == DialogResult.OK)
+            {
+                ccGaussianBlurWeight = (int)gbNUD.Value;
+                ccSmoothWeight = (int)sNUD.Value;
+                ccEdgeEnhanceThreshold = (byte)eetNUD.Value;
+                videoFilter = "coinDetect";
+            }
+            popup.Update();
+            textBox1.Text += popup.ifPanelNull();
+        }
+
+        private void applyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            videoFilter = "coinDetect";
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
         private void setFrameskipToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1228,6 +1423,10 @@ namespace ImePro
             }
             popup.Update();
             textBox1.Text += popup.ifPanelNull();
+            if (!isVideoOn)
+            {
+                applyFilter(processed, videoFilter);
+            }
         }
 
 

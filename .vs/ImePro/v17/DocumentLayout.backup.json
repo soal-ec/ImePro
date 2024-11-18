@@ -3,15 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\griin\\source\\repos\\ImePro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|C:\\Users\\griin\\source\\repos\\ImePro\\imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|c:\\users\\griin\\source\\repos\\imepro\\imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|c:\\users\\griin\\source\\repos\\imepro\\imepro\\filters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\filters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|c:\\users\\griin\\source\\repos\\imepro\\imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|C:\\Users\\griin\\source\\repos\\ImePro\\imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{C10A3B67-BECA-4AC3-88B2-0D2AAED45E52}|ImePro\\ImePro.csproj|solutionrelative:imepro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -22,45 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 297,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
-              "RelativeDocumentMoniker": "ImePro\\Form1.cs",
-              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs [Design]",
-              "RelativeToolTip": "ImePro\\Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T15:21:36.349Z",
-              "EditorCaption": " [Design]"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
               "RelativeDocumentMoniker": "ImePro\\Form1.cs",
-              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
-              "RelativeToolTip": "ImePro\\Form1.cs",
-              "ViewState": "AgIAACwEAAAAAAAAAAAcwG8EAABNAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs*",
+              "RelativeToolTip": "ImePro\\Form1.cs*",
+              "ViewState": "AgIAAN8BAAAAAAAAAAAiwAkAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T07:40:58.007Z",
+              "WhenOpened": "2024-11-18T01:33:22.727Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Filters.cs",
-              "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Filters.cs",
-              "RelativeDocumentMoniker": "ImePro\\Filters.cs",
-              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Filters.cs",
-              "RelativeToolTip": "ImePro\\Filters.cs",
-              "ViewState": "AgIAAAIFAAAAAAAAAAAuwDAFAAAwAAAAAAAAAA==",
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs",
+              "RelativeDocumentMoniker": "ImePro\\Form1.cs",
+              "ToolTip": "C:\\Users\\griin\\source\\repos\\ImePro\\ImePro\\Form1.cs [Design]*",
+              "RelativeToolTip": "ImePro\\Form1.cs [Design]*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T14:49:40.194Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T15:21:36.349Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }
