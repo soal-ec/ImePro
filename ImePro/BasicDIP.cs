@@ -318,8 +318,9 @@ namespace ImePro
                 }
             }
         }
-        public static void BinaryThresholding(Bitmap loaded, ref Bitmap processed)
+        public static void BinaryThresholding(Bitmap loaded, ref Bitmap processed, int threshold)
         {
+            // default value 180
             processed = new Bitmap(loaded.Width, loaded.Height);
             Color pixel;
             int g;
@@ -329,7 +330,7 @@ namespace ImePro
                 {
                     pixel = loaded.GetPixel(x, y);
                     g = (int)(pixel.R + pixel.G + pixel.B / 3);
-                    if (g < 180)
+                    if (g < threshold)
                         processed.SetPixel(x, y, Color.Black);
                     else
                         processed.SetPixel(x, y, Color.White);

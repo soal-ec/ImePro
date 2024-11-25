@@ -11,6 +11,12 @@ using AForge.Video;
 using AForge.Video.DirectShow;
 //using OpenCvSharp;
 using AForge.Imaging.Filters;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using static System.Windows.Forms.AxHost;
+using System.Security.Policy;
 
 namespace ImePro
 {
@@ -58,9 +64,16 @@ namespace ImePro
 
         int ccGaussianBlurWeight = 5;
         int ccSmoothWeight = 1;
-        byte ccEdgeEnhanceThreshold;
+        byte ccEdgeEnhanceThreshold = 150;
 
         int ccMeanFilter = 7;
+
+        bool useSteps = false;
+        int steps = 0;
+
+        bool debug = true;
+
+        int fcThres = 75;
 
         public Form1()
         {
@@ -78,6 +91,16 @@ namespace ImePro
             }
 
             if (toolStripComboBox1.Items.Count > 0) toolStripComboBox1.SelectedIndex = 0;
+
+            loaded = new Bitmap("images/coins_rot_downscaled.jpg");
+            //loaded = new Bitmap("images/sample_image.jpeg");
+            pictureBox1.Image = loaded;
+            // 64 coins
+
+            if (debug)
+            {
+                applyAForgeFiltersToolStripMenuItem.Enabled = true;
+            }
         }
         
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -132,7 +155,7 @@ namespace ImePro
         
         private void rightToLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loaded = processed;
+            loaded = (Bitmap)processed.Clone();
             pictureBox1.Image = loaded;
         }
 
@@ -314,10 +337,32 @@ namespace ImePro
         private void binaryThresholdingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded != null)
-                BasicDIP.BinaryThresholding(loaded, ref processed);
+            {
+                PopupForm popup = new PopupForm();
+                popup.PopupTitle = "Binary Thresholding";
+                System.Windows.Forms.NumericUpDown numericUpDown = new System.Windows.Forms.NumericUpDown
+                {
+                    Height = 45,
+                    Width = 392,
+                    Minimum = 0,
+                    Maximum = 255,
+                    Value = 180,
+                    DecimalPlaces = 0,
+                    Name = "Weight"
+                };
+                popup.SetInputControl(numericUpDown);
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
+                    BasicDIP.BinaryThresholding(loaded, ref processed, (int)numericUpDown.Value);
+                }
+                popup.Update();
+                textBox1.Text += popup.ifPanelNull();
+            }
             else
                 textBox1.Text += "No Loaded Bitmap\r\n";
             pictureBox3.Image = processed;
+
+
         }
 
         // VIDEO
@@ -348,7 +393,7 @@ namespace ImePro
             }
         }
 
-            // Stop video
+        // Stop video
         private void stopVideo()
         {
             label4.Text = "Loaded";
@@ -363,7 +408,7 @@ namespace ImePro
             pictureBox2.Enabled = true;
         }
 
-            // Update picturebox1
+        // Update picturebox1
         private void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap video = (Bitmap)eventArgs.Frame.Clone();
@@ -482,38 +527,6 @@ namespace ImePro
                     break;
                 case "pixelate":
                     BitmapFilter.Pixelate(bm, pixelatePixel, pixelateGrid);
-                    break;
-                case "coinDetect":
-                    if (!isVideoOn)
-                    {
-                        // using bitmap
-                        BitmapFilter.GrayScale(bm);
-                        BitmapFilter.GaussianBlur(bm, ccGaussianBlurWeight);
-                        BitmapFilter.Smooth(bm, ccSmoothWeight);
-                        BitmapFilter.EmbossLaplacian(bm);
-                        BitmapFilter.EdgeEnhance(bm, ccEdgeEnhanceThreshold);
-
-                        // using mat
-                        //Mat bmat = bm.ToMat();
-                        //Cv2.MedianBlur((InputArray)bm, bm, 5);
-                    }
-                    break;
-                case "coinDetectAForge":
-                    if (!isVideoOn)
-                    {
-                        Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
-                        bm = grayscaleFilter.Apply(bm);
-                        GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
-                        bm = blurFilter.Apply(bm);
-                        Mean meanFilter = new Mean();
-                        bm = meanFilter.Apply(bm);
-                        SobelEdgeDetector edgeDetector = new SobelEdgeDetector();
-                        bm = edgeDetector.Apply(bm);
-                        //CannyEdgeDetector canny = new CannyEdgeDetector(lowThreshold, highThreshold);
-                        //bm = canny.Apply(bm);
-
-                    }
-
                     break;
                 default:
                     break;
@@ -825,7 +838,7 @@ namespace ImePro
                 Height = 45,
                 Width = 392,
                 Minimum = -10,
-                Maximum = 20,
+                Maximum = 255,
                 Value = 4,
                 DecimalPlaces = 0,
                 Name = "Weight"
@@ -1396,11 +1409,223 @@ namespace ImePro
 
         private void applyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            videoFilter = "coinDetect";
-            if (!isVideoOn)
+            // loaded = base image
+            // processed = changed image
+            // bm = method var
+            processed = (Bitmap)loaded.Clone();
+            Bitmap bm = (Bitmap)processed.Clone();
+            
+            if (debug && useSteps)
             {
-                applyFilter(processed, videoFilter);
+                switch (steps)
+                {
+                    case 0:
+                        BitmapFilter.GrayScale(bm);
+                        //textBox1.Text += "Step 1: Greyscale\r\n";
+                        steps = 1;
+                        break;
+                    case 1:
+                        //BitmapFilter.GaussianBlur(bm, 4);
+                        //BitmapFilter.Smooth(bm, 1);
+                        GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
+                        bm = blurFilter.Apply(bm);
+                        //textBox1.Text += "Step 2: Blur\r\n";
+                        steps = 2;
+                        break;
+                    case 2:
+                        //BasicDIP.BinaryThresholding(bm, ref bm, 200);
+                        BitmapFilter.EdgeDetectConvolution(bm, BitmapFilter.EDGE_DETECT_SOBEL, (byte)10);
+                        //textBox1.Text += "Step 3: Edge Detect\r\n";
+                        steps = 3;
+                        break;
+                    case 3:
+                        List<Rectangle> ellipses = new List<Rectangle>();
+                        bm = findCoin(bm, ellipses, fcThres);
+                        //textBox1.Text += "Step 4: Find Coin\r\n";
+                        steps = 4;
+                        break;
+                    default:
+                        steps = 0;
+                        return;
+                }
+                processed = bm;
+                pictureBox3.Image = processed;
+
+                loaded = (Bitmap)processed.Clone();
+                pictureBox1.Image = loaded;
             }
+            else
+            {
+                List<Rectangle> ellipses = new List<Rectangle>();
+
+                BitmapFilter.GrayScale(bm);
+                GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
+                bm = (Bitmap)blurFilter.Apply(bm).Clone();
+                BitmapFilter.EdgeDetectConvolution(bm, BitmapFilter.EDGE_DETECT_SOBEL, (byte)10);
+
+                bm = (Bitmap)findCoin(bm, ellipses, fcThres).Clone();
+                Console.WriteLine(ellipses.Count);
+                //textBox1.Text += $"Found {ellipses.Count} Coins\n";
+
+                processed = bm;
+                pictureBox3.Image = processed;
+
+                loaded = (Bitmap)processed.Clone();
+                pictureBox1.Image = loaded;
+            }
+
+        }
+
+        private void applyAForgeFiltersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = loaded;
+            Bitmap bm = (Bitmap)processed.Clone();
+            List<Rectangle> ellipses = new List<Rectangle>();
+
+            Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
+            bm = grayscaleFilter.Apply(bm);
+
+            GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
+            bm = blurFilter.Apply(bm);
+            //Mean meanFilter = new Mean();
+            //bm = meanFilter.Apply(bm);
+
+            SobelEdgeDetector edgeDetector = new SobelEdgeDetector();
+            bm = edgeDetector.Apply(bm);
+            //CannyEdgeDetector canny = new CannyEdgeDetector(lowThreshold, highThreshold);
+            //bm = canny.Apply(bm);
+
+            bm = findCoin(bm, ellipses, fcThres);
+
+            pictureBox1.Image = loaded;
+            pictureBox2.Image = processed;
+            pictureBox3.Image = bm;
+        }
+
+        // From sample image
+        //White Circles:
+        //[18, 15][25, 22] 8 * 8,
+        //[24, 43][26, 45] 3 * 3
+        //[33, 28][36, 31] 4 * 4,
+        //[42, 22][42, 22] 1 * 1,
+        //[52, 9][56, 13] 5 * 5,
+        //[53, 24][62, 33] 12 * 12,
+        //Grey Circles:
+        //[34, 11][35, 12] 2 * 2,
+        //[68, 20][70, 22] 3 * 3,
+        //[26, 34][26, 34] 1 * 1,
+        //[11, 39][15, 43] 5 * 5,
+        //[46, 47][] 4 * 4,
+        //Dark Grey Circles:
+        //[22, 6][26, 10] 5 * 5,
+        //[34, 42][37, 45] 4 * 4
+        //Dark Circles:
+        //[64, 8][67, 11] 4 * 4,
+        //[12, 26][15, 29] 4 * 4,
+        //[42, 30][47, 35] 6 * 6,
+        //[58, 43][60, 45] 3 * 3,
+        //[66, 48][66, 48] 1 * 1
+
+        private Bitmap findCoin(Bitmap bm, List<Rectangle> rectList, int threshold)
+        {
+            Color shapeOutlineColor = Color.LightSalmon;
+            bool[,] visited = new bool[bm.Width, bm.Height];
+            //u, d, l, r
+            int[] dx = new int[] { 0, 0, -1, 1 };
+            int[] dy = new int[] { 1, -1, 0, 0 };
+
+            Bitmap newbm = (Bitmap)bm.Clone();
+            using (Graphics g = Graphics.FromImage(newbm))
+            {
+                // list of rectangles encapsulating coins
+                rectList = new List<Rectangle>();
+                // traverse image
+                for (int x = 1; x < bm.Width-3; x++)
+                {
+                    for (int y = 1; y < bm.Height-3; y++)
+                    {
+                        Color pixel = bm.GetPixel(x, y);
+
+                        // check if white enough
+                        if (pixel.R >= threshold && pixel.R <= 255 && !visited[x, y])
+                        {
+                            if (debug)
+                            {
+                                Console.WriteLine($"coin pixel found in {x}, {y}");
+                            }
+                            List<Point> connectedPixels = new List<Point>();
+                            BFS(x, y, connectedPixels);
+
+                            // get rect edges
+                            int minX = x, maxX = x;
+                            int minY = y, maxY = y;
+                            foreach (Point p in connectedPixels)
+                            {
+                                minX = Math.Min(minX, p.X);
+                                minY = Math.Min(minY, p.Y);
+                                maxX = Math.Max(maxX, p.X);
+                                maxY = Math.Max(maxY, p.Y);
+                            }
+
+                            if (connectedPixels.Count > 0)
+                            {
+                                Rectangle rect = new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
+                                if (debug)
+                                {
+                                    Console.WriteLine($"Rectangle in [{minX},{minY}], [{maxX},{maxY}]\n");
+                                }
+                                rectList.Add(rect);
+                                using (Brush brush = new SolidBrush(shapeOutlineColor))
+                                {
+                                    g.FillEllipse(brush, rect);     // Fill the ellipse with color
+                                    g.DrawEllipse(Pens.Red, rect);  // Optionally, draw a border around the ellipse
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            bool InBounds(int x, int y)
+            {
+                return x >= 1 && x < bm.Width-3 && y >= 1 && y < bm.Height-3;
+            }
+
+            // BFS
+            void BFS(int startX, int startY, List<Point> connectedPixels)
+            {
+                Queue<Point> queue = new Queue<Point>();
+                queue.Enqueue(new Point(startX, startY));
+                visited[startX, startY] = true;
+
+                while (queue.Count > 0)
+                {
+                    Point p = queue.Dequeue();
+                    connectedPixels.Add(p);
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int newX = p.X + dx[i];
+                        int newY = p.Y + dy[i];
+
+                        // if in bounds, is not visited and is within thresholds
+                        if (InBounds(newX, newY) && !visited[newX, newY])
+                        {
+                            Color currPix = bm.GetPixel(newX, newY);
+                            if (currPix.R >= threshold && currPix.R <= 255)
+                            {
+                                visited[newX, newY] = true;
+                                queue.Enqueue(new Point(newX, newY));
+                            }
+                        }
+                    }
+                }
+            }
+            if (rectList.Count > 0)
+                textBox1.Text += $"Coins Found: {rectList.Count}";
+            else
+                textBox1.Text += $"No Coins Found";
+            return newbm;
         }
 
         private void setFrameskipToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1428,7 +1653,6 @@ namespace ImePro
                 applyFilter(processed, videoFilter);
             }
         }
-
 
         private void timer1_Tick(object sender, EventArgs e)
         {
