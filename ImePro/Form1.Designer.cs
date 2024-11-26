@@ -600,9 +600,11 @@ namespace ImePro
             // 
             // tweakValuesToolStripMenuItem
             // 
+            this.tweakValuesToolStripMenuItem.Enabled = false;
             this.tweakValuesToolStripMenuItem.Name = "tweakValuesToolStripMenuItem";
             this.tweakValuesToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.tweakValuesToolStripMenuItem.Text = "Tweak Values";
+            this.tweakValuesToolStripMenuItem.Visible = false;
             this.tweakValuesToolStripMenuItem.Click += new System.EventHandler(this.tweakValuesToolStripMenuItem_Click);
             // 
             // applyToolStripMenuItem
@@ -618,6 +620,7 @@ namespace ImePro
             this.applyAForgeFiltersToolStripMenuItem.Name = "applyAForgeFiltersToolStripMenuItem";
             this.applyAForgeFiltersToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.applyAForgeFiltersToolStripMenuItem.Text = "Apply (AForge filters)";
+            this.applyAForgeFiltersToolStripMenuItem.Visible = false;
             this.applyAForgeFiltersToolStripMenuItem.Click += new System.EventHandler(this.applyAForgeFiltersToolStripMenuItem_Click);
             // 
             // pictureBox1
@@ -729,6 +732,7 @@ namespace ImePro
             this.textBox1.Location = new System.Drawing.Point(15, 320);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(300, 100);
             this.textBox1.TabIndex = 16;
             // 
