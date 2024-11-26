@@ -77,12 +77,6 @@ namespace ImePro
         int fcThres = 50;
         int sizeThres = 20;
 
-        //5 cent : 7
-        //10 cent : 11
-        //25 cent : 28
-        //1 peso : 13
-        //5 peso : 5
-
         int[] coinDiaThres = {107, 120, 141, 161};
 
         Color shapeOutlineColor = Color.Red;
@@ -106,10 +100,7 @@ namespace ImePro
             if (toolStripComboBox1.Items.Count > 0) toolStripComboBox1.SelectedIndex = 0;
 
             loaded = new Bitmap("images/coins.jpeg");
-            //loaded = new Bitmap("images/coins_rot_downscaled.jpg");
-            //loaded = new Bitmap("images/sample_image.jpeg");
             pictureBox1.Image = loaded;
-            // 64 coins
 
             if (debug)
             {
@@ -1423,9 +1414,6 @@ namespace ImePro
 
         private void applyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // loaded = base image
-            // processed = changed image
-            // bm = method var
             processed = (Bitmap)loaded.Clone();
             Bitmap bm = (Bitmap)processed.Clone();
             
@@ -1435,7 +1423,6 @@ namespace ImePro
                 {
                     case 0:
                         BitmapFilter.GrayScale(bm);
-                        //textBox1.Text += "Step 1: Greyscale\r\n";
                         steps = 1;
                         break;
                     case 1:
@@ -1443,19 +1430,16 @@ namespace ImePro
                         //BitmapFilter.Smooth(bm, 1);
                         GaussianBlur blurFilter = new GaussianBlur(ccGaussianBlurWeight, 7);
                         bm = blurFilter.Apply(bm);
-                        //textBox1.Text += "Step 2: Blur\r\n";
                         steps = 2;
                         break;
                     case 2:
                         //BasicDIP.BinaryThresholding(bm, ref bm, 200);
                         BitmapFilter.EdgeDetectConvolution(bm, BitmapFilter.EDGE_DETECT_SOBEL, (byte)10);
-                        //textBox1.Text += "Step 3: Edge Detect\r\n";
                         steps = 3;
                         break;
                     case 3:
                         List<Rectangle> ellipses = new List<Rectangle>();
                         bm = findCoin(bm, loaded, ref ellipses, fcThres);
-                        //textBox1.Text += "Step 4: Find Coin\r\n";
                         steps = 4;
                         break;
                     default:
@@ -1481,8 +1465,6 @@ namespace ImePro
                 bm = (Bitmap)findCoin(bm, loaded, ref ellipses, fcThres).Clone();
                 textBox1.Text += $"Object Count: {ellipses.Count}" + Environment.NewLine;
                 int index = 1;
-                //int diaMin = Math.Max(ellipses[0].Width, ellipses[0].Height);
-                //int diaMax = Math.Max(ellipses[0].Width, ellipses[0].Height);
                 int diaSum = 0;
 
                 int[] coinCount = new int[5];
@@ -1491,7 +1473,7 @@ namespace ImePro
                 {
                     int xy = (ell.Width + ell.Height)/2;
                     //Console.WriteLine($"({index}), Pos: {ell.X}, {ell.Y}, Dia: {Math.Max(ell.Width, ell.Height)}");
-                    //Console.WriteLine($"{xy}");
+                    //index++;
                     if (xy < coinDiaThres[0])
                         coinCount[0]++;
                     else if (xy < coinDiaThres[1])
@@ -1502,13 +1484,8 @@ namespace ImePro
                         coinCount[3]++;
                     else
                         coinCount[4]++;
-                    //index++;
-                    //diaMin = Math.Min(Math.Max(ell.Width, ell.Height), diaMin);
-                    //diaMax = Math.Max(Math.Max(ell.Width, ell.Height), diaMax);
                     diaSum += Math.Max(ell.Width, ell.Height);
                 }
-                //Console.WriteLine($"Average Coin size: {diaSum / ellipses.Count}");
-                //textBox1.Text += $"Found {ellipses.Count} Coins\n";
                 Double money = (coinCount[0] * .05) + (coinCount[1] * .10) + (coinCount[2] * .25) + (coinCount[3] * 1) + (coinCount[4] * 5);
                 textBox1.Text += $"There are: " + Environment.NewLine + 
                     $"[{coinCount[0]}] 5 cent coins, " + Environment.NewLine +
@@ -1521,8 +1498,6 @@ namespace ImePro
 
                 processed = bm;
                 pictureBox3.Image = processed;
-
-                //loaded = (Bitmap)processed.Clone();
                 pictureBox1.Image = loaded;
             }
 
@@ -1543,26 +1518,19 @@ namespace ImePro
             bm = (Bitmap)findCoin(bm, loaded, ref ellipses, fcThres).Clone();
             textBox1.Text += $"Ellipse Count: {ellipses.Count}";
             int index = 1;
-            //int diaMin = Math.Max(ellipses[0].Width, ellipses[0].Height);
-            //int diaMax = Math.Max(ellipses[0].Width, ellipses[0].Height);
             int diaSum = 0;
             foreach (Rectangle ell in ellipses)
             {
                 int xy = ell.Width * ell.Height;
                 //Console.WriteLine($"({index}), Pos: {ell.X}, {ell.Y}, Dia: {Math.Max(ell.Width, ell.Height)}");
-                Console.WriteLine($"xy");
-                //diaMin = Math.Min(Math.Max(ell.Width, ell.Height), diaMin);
-                //diaMax = Math.Max(Math.Max(ell.Width, ell.Height), diaMax);
-                diaSum += Math.Max(ell.Width, ell.Height);
                 //index++;
+                Console.WriteLine($"xy");
+                diaSum += Math.Max(ell.Width, ell.Height);
             }
             Console.WriteLine($"Average Coin size: {diaSum / ellipses.Count}");
-            //textBox1.Text += $"Found {ellipses.Count} Coins\n";
 
             processed = bm;
             pictureBox3.Image = processed;
-
-            //loaded = (Bitmap)processed.Clone();
             pictureBox1.Image = loaded;
         }
 
